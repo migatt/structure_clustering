@@ -2,7 +2,7 @@
 
 **structure_clustering is a Python package to cluster molecular structures into groups of similar ones.** It provides a command-line interface to perform clustering of a multi-xyz file, or you can use it within your Python code.
 
-<img src="https://github.com/user-attachments/assets/0230cbef-ea46-42b1-a340-dddda78d134d" width="50%" />[^1]
+<img src="https://github.com/user-attachments/assets/fef206d6-e039-49ce-911d-627068841853" width="50%" />[^1]
 
 [^1]: The figure shows exemplary clusters from Ag⁺(H₂O)₄ structures.
 
