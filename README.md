@@ -14,7 +14,7 @@ You can install structure_clustering via pip:
 pip install structure_clustering
 ```
 
-Prebuilt wheels are available for most platforms. If you prefer to compile and build the wheel yourself, ensure that the [Boost Graph Library](https://www.boost.org/doc/libs/release/libs/graph/doc/index.html) is installed system-wide.
+Prebuilt wheels are available for most platforms (Windows, Linux, MacOS). If you prefer to compile and build the wheel yourself, ensure that the [Boost Graph Library](https://www.boost.org/doc/libs/release/libs/graph/doc/index.html) is installed system-wide.
 
 
 ## Using the Command-Line Interface
