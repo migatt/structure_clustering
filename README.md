@@ -20,6 +20,12 @@ Prebuilt wheels are available for most platforms. If you prefer to compile and b
 ## Using the Command-Line Interface
 You can invoke the structure_clustering script using the `structure_clustering` command.
 
+<details>
+  <summary>Use this method if the command does not work</summary>
+
+  On some systems, scripts installed via pip are not added to the system's `PATH`. You can either [add](https://stackoverflow.com/a/70680333/17726525) them to your `PATH`, or run the script directly by invoking `python3 -m structure_clustering`.
+</details>
+
 ```bash
 usage: structure_clustering <xyz_file> [--config CONFIG] [--output OUTPUT] [--disconnected]
 
