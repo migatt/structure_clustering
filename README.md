@@ -1,6 +1,6 @@
-# structure_clustering
+# structure_clustering &ndash; Cluster Molecular Structures Into Groups of Similar Ones
 
-**structure_clustering is a Python package to cluster molecular structures into groups of similar ones.** It provides a command-line interface to perform clustering of a multi-xyz file, or you can use it within your Python code.
+**structure_clustering** is a Python package to cluster molecular structures into groups of similar ones. Our approach involves analysing the intermolecular distances to represent each structure's connectivity as an undirected, vertex-labelled graph. It then uses graph isomorphism to identify structures that belong to the same group. The package offers a command-line interface for clustering a multi-XYZ file or can be used within your Python code.
 
 <img src="https://github.com/user-attachments/assets/fef206d6-e039-49ce-911d-627068841853" width="50%" />[^1]
 
@@ -14,10 +14,10 @@ You can install structure_clustering via pip:
 pip install structure_clustering
 ```
 
-For most platforms, prebuilt wheels are available. If you need (or prefer) to compile and build the wheel yourself, ensure that the [Boost Graph Library](https://www.boost.org/doc/libs/release/libs/graph/doc/index.html) is available system-wide.
+Prebuilt wheels are available for most platforms. If you prefer to compile and build the wheel yourself, ensure that the [Boost Graph Library](https://www.boost.org/doc/libs/release/libs/graph/doc/index.html) is installed system-wide.
 
 
-## Using the Command-Line interface
+## Using the Command-Line Interface
 You can invoke the structure_clustering script using the `structure_clustering` command.
 
 ```bash
@@ -35,11 +35,11 @@ options:
   -h, --help       show this help message and exit
 ```
 
-For example, to cluster your xyz file:
+For example, to cluster an xyz file:
 ```bash
 structure_clustering my_structures.xyz
 ```
-To specify a "special" distance for recognising O-H connectivity (see the next section), use:
+To specify a custom distance for recognising O-H connectivity (see the next section), use a TOML config file:
 ```bash
 structure_clustering my_structures.xyz --config sc_config.toml
 ```
@@ -67,8 +67,8 @@ Writing output file to structures.xyz.sc.dat ...
 ```
 
 
-## Config File
-You can use a TOML file to configure the behaviour of the command-line interface.
+## Configuration File
+You can use a TOML file to control the parameters of the command-line interface. The `[covalent]` section allows you to override the algorithm's default covalent radii. In the `[pair]` section, you can specify a maximum distance for pairs of atoms.
 ```toml
 [covalent]
 He = 0.9
@@ -83,7 +83,7 @@ only_connected_graphs = true
 All settings are optional. Distances are given in Angstrom. Elements are case-sensitive. If you specify `only_connected_graphs` in the config file, this will overwrite your setting from the command-line switch.
 
 
-## Demo Code
+## Example Code
 ```py
 import structure_clustering
 from structure_clustering import Structure, Atom
@@ -117,4 +117,4 @@ print("singles", sc_result.singles)
 
 
 ## License
-structure_clustering is licensed under the MIT License. See the [LICENSE file](LICENSE) for more details.
+The structure_clustering package is licensed under the MIT License. See the [LICENSE file](LICENSE) for more details.
