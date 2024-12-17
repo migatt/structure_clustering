@@ -25,10 +25,19 @@ PYBIND11_MODULE(_core, m) {
     py::class_<Structure>(m, "Structure")
         .def(py::init<int>())
         .def("addAtom", &Structure::addAtom)
-        .def_property_readonly("numConnections", &Structure::getNumConnections);
+        .def_property_readonly("numConnections", &Structure::getNumConnections)
+        .def_property_readonly("numAtoms", &Structure::numAtoms)
+        .def("getAtom", &Structure::getAtom);
 
-    py::class_<Atom>(m, "Atom").def(
-        py::init<const int, const double, const double, const double>());
+    py::class_<Atom>(m, "Atom")
+        .def(py::init<const int, const double, const double, const double>())
+        .def_property_readonly("atomic_number", &Atom::atomicNumber)
+        .def_property_readonly("position", &Atom::position);
+
+    py::class_<Position>(m, "Position")
+        .def_property_readonly("x", &Position::x)
+        .def_property_readonly("y", &Position::y)
+        .def_property_readonly("z", &Position::z);
 
     py::class_<Result>(m, "Result")
         .def("export", &Result::exportDat)

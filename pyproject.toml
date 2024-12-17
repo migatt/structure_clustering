@@ -8,12 +8,12 @@ version = "1.1.2"
 description = " Python package to cluster molecular structures into groups of similar ones."
 readme = "README.md"
 authors = [
-  { name = "Michael Gatt", email = "Michael.Gatt@student.uibk.ac.at" },
+  { name = "Michael Gatt" },
   { name = "Gabriel Schöpfer" },
   { name = "Milan Ončák" },
 ]
 maintainers = [
-  { name = "Michael Gatt", email = "Michael.Gatt@student.uibk.ac.at" },
+  { name = "Michael Gatt" },
 ]
 requires-python = ">=3.7"
 classifiers = [
