@@ -36,6 +36,14 @@ const bool Structure::isGraphFullyConnected() const {
     return num == 1;
 }
 
+const VertexInvariant &Structure::getVertexInvariant(VertexInvariant::Map &shared_names) const {
+    if (!_vertexInvariant.has_value()) {
+        _vertexInvariant.emplace(_graph, shared_names);
+        _vertexInvariant->collect_names();
+    }
+    return *_vertexInvariant;
+}
+
 const std::vector<int> &Structure::getDegreeSequence() const {
     if (!_degreeSequence.has_value()) {
         const Graph &g = getGraph();

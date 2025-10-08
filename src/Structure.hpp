@@ -21,7 +21,8 @@ using Graph = boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS
 class Structure {
     int _id;
     std::vector<Atom> _atoms;
-    mutable std::optional<std::vector<int>> _degreeSequence; 
+    mutable std::optional<VertexInvariant> _vertexInvariant;
+    mutable std::optional<std::vector<int>> _degreeSequence;
     Graph _graph;
 
 
@@ -35,6 +36,7 @@ public:
     const int getNumConnections() const;
     const Graph &getGraph() const;
     const bool isGraphFullyConnected() const;
+    const VertexInvariant &getVertexInvariant(VertexInvariant::Map &shared_names) const;
     const std::vector<int> &getDegreeSequence() const;
     void constructGraph(const Machine &machine);
 };
