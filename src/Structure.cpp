@@ -36,6 +36,21 @@ const bool Structure::isGraphFullyConnected() const {
     return num == 1;
 }
 
+const std::vector<int> &Structure::getDegreeSequence() const {
+    if (!_degreeSequence.has_value()) {
+        const Graph &g = getGraph();
+        std::vector<int> degrees(boost::num_vertices(g));
+        auto index_map = get(boost::vertex_index, g);
+
+        for (auto v : boost::make_iterator_range(vertices(g))) {
+            degrees[index_map[v]] = out_degree(v, g);
+        }
+        std::sort(degrees.begin(), degrees.end());
+        _degreeSequence = std::move(degrees);
+    }
+    return *_degreeSequence;
+}
+
 void Structure::constructGraph(const Machine &machine) {
     // add graph vertices
     auto vertex_name_map = get(boost::vertex_name, _graph);

@@ -104,31 +104,72 @@ Result Machine::cluster(std::vector<Structure> &structures) {
         structure.constructGraph(*this);
     }
 
+    // Group structures by degree sequence
+    std::map<std::vector<int>, std::vector<int>> degreeBuckets;
+    for (int i = 0; i < (int)structures.size(); ++i) {
+        const auto &deg_seq = structures[i].getDegreeSequence();
+        degreeBuckets[deg_seq].push_back(i);
+    }
+
     // temporarily write clustered indices here
     std::vector<std::vector<int>> clusterIndices;
 
-    bool found;
+    VertexInvariant::Map shared_names;
 
-    // For each structure, check if its graph is isomorphic to any of the other graphs.
-    // The graphs can only be isomorphic if they have the same number of bonds and the same vertex
-    // labels. If specified in the options, the graphs are also required to be fully connected.
-    for (int i = 0; i < (int)structures.size(); i++) {
-        found = false;
-        for (int j = 0; j < (int)clusterIndices.size(); j++) {
-            if (structures[i].getNumConnections() ==
-                structures[clusterIndices[j][0]].getNumConnections()) {
-                found = is_named_vertices_isomorphic(structures[clusterIndices[j][0]].getGraph(),
-                                                     structures[i].getGraph());
-                if (found && (!_onlyConnectedGraphs || structures[i].isGraphFullyConnected())) {
-                    clusterIndices[j].push_back(i);
+    bool found;
+    
+    for (const auto &[deg_seq, indices] : degreeBuckets) {
+        for (int i : indices) {
+            bool found = false;
+            const auto &inv_i = structures[i].getVertexInvariant(shared_names);
+
+            for (auto &cluster : clusterIndices) {
+                int rep_idx = cluster[0];
+
+                // Skip if not in same degree bucket (optional if you use a map of buckets)
+                if (structures[rep_idx].getDegreeSequence() != deg_seq)
+                    continue;
+
+                const auto &inv_j = structures[rep_idx].getVertexInvariant(shared_names);
+
+                if (structures[rep_idx].getNumConnections() == structures[i].getNumConnections()) {
+                    found = is_named_vertices_isomorphic(
+                        structures[rep_idx].getGraph(), inv_j,
+                        structures[i].getGraph(), inv_i);
+
+                    if (found && (!_onlyConnectedGraphs || structures[i].isGraphFullyConnected())) {
+                        cluster.push_back(i);
+                    }
+                    if (found)
+                        break;
                 }
-                if (found)
-                    break;
             }
+
+            if (!found && (!_onlyConnectedGraphs || structures[i].isGraphFullyConnected()))
+                clusterIndices.push_back({i});
         }
-        if (!found && (!_onlyConnectedGraphs || structures[i].isGraphFullyConnected()))
-            clusterIndices.push_back({i});
     }
+
+    // // For each structure, check if its graph is isomorphic to any of the other graphs.
+    // // The graphs can only be isomorphic if they have the same number of bonds and the same vertex
+    // // labels. If specified in the options, the graphs are also required to be fully connected.
+    // for (int i = 0; i < (int)structures.size(); i++) {
+    //     found = false;
+    //     for (int j = 0; j < (int)clusterIndices.size(); j++) {
+    //         if (structures[i].getNumConnections() ==
+    //             structures[clusterIndices[j][0]].getNumConnections()) {
+    //             found = is_named_vertices_isomorphic(structures[clusterIndices[j][0]].getGraph(),
+    //                                                  structures[i].getGraph());
+    //             if (found && (!_onlyConnectedGraphs || structures[i].isGraphFullyConnected())) {
+    //                 clusterIndices[j].push_back(i);
+    //             }
+    //             if (found)
+    //                 break;
+    //         }
+    //     }
+    //     if (!found && (!_onlyConnectedGraphs || structures[i].isGraphFullyConnected()))
+    //         clusterIndices.push_back({i});
+    // }
 
     // cleanup result
     Result result = Result(structures);

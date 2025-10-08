@@ -33,7 +33,7 @@ public:
     const int getNumConnections() const;
     const Graph &getGraph() const;
     const bool isGraphFullyConnected() const;
-
+    const std::vector<int> &getDegreeSequence() const;
     void constructGraph(const Machine &machine);
 };
 
