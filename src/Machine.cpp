@@ -55,28 +55,7 @@ double Machine::getMaxPairDistance(int atomicNumberA, int atomicNumberB) const {
     return -1;
 }
 
-namespace {
-    struct VertexInvariant {
-        using Map = std::map<std::string, size_t>;
-        Graph const &_graph;
-        Map &_mappings;
 
-        using result_type = size_t;
-        using argument_type = Graph::vertex_descriptor;
-
-        size_t operator()(argument_type u) const {
-            return _mappings.at(boost::get(boost::vertex_name, _graph, u));
-        }
-        size_t max() const { return _mappings.size(); }
-
-        void collect_names() {
-            for (auto vd : boost::make_iterator_range(boost::vertices(_graph))) {
-                size_t next_id = _mappings.size();
-                _mappings.insert({boost::get(boost::vertex_name, _graph, vd), next_id});
-            }
-        }
-    };
-} // namespace
 
 template <typename graph1, typename graph2>
 bool is_named_vertices_isomorphic(const graph1 &g, const graph2 &h) noexcept {
