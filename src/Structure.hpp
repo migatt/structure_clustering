@@ -21,7 +21,9 @@ using Graph = boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS
 class Structure {
     int _id;
     std::vector<Atom> _atoms;
+    mutable std::optional<std::vector<int>> _degreeSequence; 
     Graph _graph;
+
 
 public:
     Structure(const int id);
