@@ -6,6 +6,7 @@
 #include "Result.hpp"
 #include "Structure.hpp"
 #include "constants.hpp"
+#include "VertexInvariant.hpp"
 
 Machine::Machine() : _onlyConnectedGraphs(true), _covalentRadii(DEFAULT_COVALENT_RADII) {}
 
@@ -113,8 +114,8 @@ Result Machine::cluster(std::vector<Structure> &structures) {
 
                 if (structures[rep_idx].getNumConnections() == structures[i].getNumConnections()) {
                     found = is_named_vertices_isomorphic(
-                        structures[rep_idx].getGraph(), inv_j,
-                        structures[i].getGraph(), inv_i);
+                        structures[rep_idx].getGraph(),
+                        structures[i].getGraph());
 
                     if (found && (!_onlyConnectedGraphs || structures[i].isGraphFullyConnected())) {
                         cluster.push_back(i);

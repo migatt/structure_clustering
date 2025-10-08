@@ -11,6 +11,7 @@
 #include "Atom.hpp"
 #include "Machine.hpp"
 #include "Structure.hpp"
+#include "VertexInvariant.hpp"
 
 double distance(const Atom &atom_a, const Atom &atom_b) {
     return sqrt(pow(atom_b.position().x() - atom_a.position().x(), 2) +

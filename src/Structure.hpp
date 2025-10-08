@@ -12,34 +12,12 @@
 
 #include "Atom.hpp"
 #include "Machine.hpp"
+#include "VertexInvariant.hpp"
 
 class Machine; // forward declaration
 
 using Graph = boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS,
                                     boost::property<boost::vertex_name_t, std::string>>;
-
-namespace {
-    struct VertexInvariant {
-        using Map = std::map<std::string, size_t>;
-        Graph const &_graph;
-        Map &_mappings;
-
-        using result_type = size_t;
-        using argument_type = Graph::vertex_descriptor;
-
-        size_t operator()(argument_type u) const {
-            return _mappings.at(boost::get(boost::vertex_name, _graph, u));
-        }
-        size_t max() const { return _mappings.size(); }
-
-        void collect_names() {
-            for (auto vd : boost::make_iterator_range(boost::vertices(_graph))) {
-                size_t next_id = _mappings.size();
-                _mappings.insert({boost::get(boost::vertex_name, _graph, vd), next_id});
-            }
-        }
-    };
-} // namespace
 
 class Structure {
     int _id;
