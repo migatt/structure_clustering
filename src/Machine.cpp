@@ -113,7 +113,7 @@ Result Machine::cluster(std::vector<Structure> &structures) {
                 const auto &inv_j = structures[rep_idx].getVertexInvariant(shared_names);
 
                 if (structures[rep_idx].getNumConnections() == structures[i].getNumConnections()) {
-                    std::cout << "checking isomorphism between " << rep_idx << " and " << i << std::endl;
+                    std::cout << "checking isomorphism between " << rep_idx << " and " << i << " numEdge: " << structures[rep_idx].getNumConnections() << std::endl;
 
                     found = is_named_vertices_isomorphic(
                         structures[rep_idx].getGraph(),
