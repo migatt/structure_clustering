@@ -106,13 +106,15 @@ Result Machine::cluster(std::vector<Structure> &structures) {
             for (auto &cluster : clusterIndices) {
                 int rep_idx = cluster[0];
 
-                // Skip if not in same degree bucket (optional if you use a map of buckets)
+                // Skip if not in same degree bucket
                 if (structures[rep_idx].getDegreeSequence() != deg_seq)
                     continue;
 
                 const auto &inv_j = structures[rep_idx].getVertexInvariant(shared_names);
 
                 if (structures[rep_idx].getNumConnections() == structures[i].getNumConnections()) {
+                    std::cout << "checking isomorphism between " << rep_idx << " and " << i << std::endl;
+
                     found = is_named_vertices_isomorphic(
                         structures[rep_idx].getGraph(),
                         structures[i].getGraph());

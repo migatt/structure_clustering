@@ -7,6 +7,7 @@
 
 using Graph = boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS,
                                     boost::property<boost::vertex_name_t, std::string>>;
+//  duplicated but it works!!
 
 struct VertexInvariant {
     using Map = std::map<std::string, size_t>;
